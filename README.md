@@ -2,7 +2,7 @@
 
 ## Getting Started
 1. `yarn install`
-2. `yarn start --feed-url="your feel url" --invoice-dir="your dir"`
+2. `yarn start --feed-url="feed url" --invoice-dir="dir path"`
 3. Check out your newly generated invoices on that dir!
 
 By default, the worker runs on a 20 seconds interval.
@@ -10,7 +10,7 @@ By default, the worker runs on a 20 seconds interval.
 ### Pulling interval is customizable
 It can run on every second as min and every 60 seconds as max.
 
-`yarn start --feed-url="your feel url" --invoice-dir="your dir" --pull-interval=45`
+`yarn start --feed-url="feed url" --invoice-dir="dir path" --pull-interval=45`
 
 
 ### a. Overview of your design
@@ -20,7 +20,7 @@ It can run on every second as min and every 60 seconds as max.
 - Used `node-schedule` for scheduling pulling job
 
 Basically we use `yargs` to receive the running arguments and provide a nice command line interface.
-We schedule a job on the desired interval `(default 20 seconds)`, then we check whether we have new events, and if so, we proceed to consume them and act according to the invoice event type. If the there no new events that run completes.
+We schedule a job on the desired interval `(default 1 minute)`, then we check whether we have new events, and if so, we proceed to consume them and act according to the invoice event type. If the there no new events that run completes.
 
 - `cli.ts` -> The command line client
 - `commons` folder -> contains utility methods for File, PDF and Validation
