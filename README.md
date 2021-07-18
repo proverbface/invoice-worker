@@ -2,7 +2,7 @@
 
 ## Getting Started
 1. `yarn install`
-2. `yarn start run --feed-url="your feel url" --invoice-dir="your dir"`
+2. `yarn start --feed-url="your feel url" --invoice-dir="your dir"`
 3. Check out your newly generated invoices on that dir!
 
 By default, the worker runs on a 20 seconds interval.
@@ -10,7 +10,7 @@ By default, the worker runs on a 20 seconds interval.
 ### Pulling interval is customizable
 It can run on every second as min and every 60 seconds as max.
 
-`yarn start run --feed-url="your feel url" --invoice-dir="your dir" --pull-interval=45`
+`yarn start --feed-url="your feel url" --invoice-dir="your dir" --pull-interval=45`
 
 
 ### a. Overview of your design

@@ -26,7 +26,7 @@ const runPeriodic = (args: CliArgs): void => {
   });
 };
 
-export const invoiceWorker = yargs(hideBin(process.argv))
+yargs(hideBin(process.argv))
   .scriptName('invoice-worker')
   .option(FEED_URL_ARG_KEY, {
     describe: FEED_URL_HELP_MESSAGE,
@@ -57,6 +57,4 @@ export const invoiceWorker = yargs(hideBin(process.argv))
   .fail(() => job?.cancel())
   .demandCommand()
   .showHelpOnFail(false, 'whoops, something went wrong! run with --help')
-  .help();
-
-invoiceWorker.argv;
+  .help().argv;

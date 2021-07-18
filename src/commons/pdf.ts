@@ -22,7 +22,7 @@ export const createInvoice = (invoice: InvoiceEvent, path: string): Promise<void
   });
 };
 
-export const generateInvoiceHeader = (doc: PDFKit.PDFDocument, invoiceContent: Invoice) => {
+export const generateInvoiceHeader = (doc: PDFKit.PDFDocument, invoiceContent: Invoice): void => {
   doc.fillColor('#444444').fontSize(20).text('Invoice', 50, 160);
 
   generateHr(doc, 185);
@@ -61,26 +61,31 @@ export const generateInvoiceHeader = (doc: PDFKit.PDFDocument, invoiceContent: I
   generateHr(doc, 282);
 };
 
-export const generateInvoiceTable = (doc: PDFKit.PDFDocument, content: Invoice) => {
-  let i;
-  const invoiceTableTop = 330;
+export const generateInvoiceTable = (doc: PDFKit.PDFDocument, content: Invoice): void => {
+  const invoiceTableTop = 300;
 
   doc.font('Helvetica-Bold');
   generateTableRow(doc, invoiceTableTop, 'Description', 'Unit Cost', 'Quantity', 'Line Total');
   generateHr(doc, invoiceTableTop + 20);
   doc.font('Helvetica');
 
-  for (i = 0; i < content.lineItems.length; i++) {
-    const item = content.lineItems[i];
-    const position = invoiceTableTop + (i + 1) * 30;
+  let position = invoiceTableTop;
+
+  for (let x = 0; x < content.lineItems.length; x++) {
+    const item = content.lineItems[x];
+    position = position + 30;
+
+    if (position > 680) {
+      doc.addPage();
+      position = 50;
+    }
 
     const lineCost = item.lineItemTotalCost ? formatCurrency(item.lineItemTotalCost) : formatCurrency(item.unitCost * item.quantity);
     generateTableRow(doc, position, item.description, formatCurrency(item.unitCost), item.quantity?.toFixed(0), lineCost);
-
     generateHr(doc, position + 20);
   }
 
-  const subtotalPosition = invoiceTableTop + (i + 1) * 30;
+  const subtotalPosition = position + 30;
   const subtotal = content.lineItems?.map((item) => item.lineItemTotalCost).reduce((acc, item) => acc + item);
 
   generateTableRow(doc, subtotalPosition, '', 'Subtotal', '', formatCurrency(subtotal));
