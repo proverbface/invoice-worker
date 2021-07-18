@@ -1,0 +1,13 @@
+node_modules/
+.env
+.idea/
+yarn-error.log
+.gradle/*
+.project
+.settings/*
+*.crt
+*.key
+.DS_Store
+dist/
+*.log
+*.pdf
